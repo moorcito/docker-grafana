@@ -34,7 +34,7 @@ scrape_configs:
     static_configs:
       - targets: ['10.0.0.42:19999']
 
-- job_name: 'tina'
+  - job_name: 'tina'
     metrics_path: '/api/v1/allmetrics'
     params:
       format: [prometheus]
@@ -57,7 +57,6 @@ scrape_configs:
     honor_labels: true
     static_configs:
             - targets: ['10.1.0.34:19999']
-
 
   - job_name: 'docker-thinkcentre'
     static_configs:
