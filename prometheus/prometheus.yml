@@ -1,0 +1,60 @@
+global:
+  scrape_interval:     5s # Set the scrape interval to every 5 seconds. Default is every 1 minute.
+  evaluation_interval: 5s # Evaluate rules every 5 seconds. The default is every 1 minute.
+  # scrape_timeout is set to the global default (10s).
+
+  # Attach these labels to any time series or alerts when communicating with
+  # external systems (federation, remote storage, Alertmanager).
+  external_labels:
+      monitor: 'codelab-monitor'
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+  # - "first.rules"
+  # - "second.rules"
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['0.0.0.0:9090']
+
+  - job_name: 'freenas'
+    metrics_path: '/netdata/api/v1/allmetrics'
+    params:
+      format: [prometheus]
+    honor_labels: true
+    static_configs:
+            - targets: ['10.0.0.100']
+
+  - job_name: 'thinkcentre'
+    metrics_path: '/api/v1/allmetrics'
+    params:
+      format: [prometheus]
+    honor_labels: true
+    static_configs:
+      - targets: ['10.0.0.42:19999']
+
+  - job_name: 'semperpi'
+    metrics_path: '/api/v1/allmetrics'
+    params:
+      format: [prometheus]
+    honor_labels: true
+    static_configs:
+            - targets: ['10.1.0.22:19999']
+
+  - job_name: 'jnavarrome'
+    metrics_path: '/api/v1/allmetrics'
+    params:
+      format: [prometheus]
+    honor_labels: true
+    static_configs:
+            - targets: ['10.1.0.34:19999']
+
+
+  - job_name: 'docker-thinkcentre'
+    static_configs:
+            - targets: ['10.0.0.42:9323']
+
+  - job_name: 'cadvisor'
+    static_configs:
+            - targets: ['cadvisor:8080']
