@@ -1,18 +1,18 @@
 version: '2'
 
-#volumes:
-#  nfsgrafana:
-#    driver: local
-#    driver_opts:
-#      type: nfs
-#      o: addr=10.0.0.100,rw
-#      device: ":/mnt/barracuda/nfsgrafana"
-#  nfsprometheus:
-#    driver: local
-#    driver_opts:
-#      type: nfs
-#      o: addr=10.0.0.100,rw
-#      device: ":/mnt/barracuda/nfsprometheus"
+volumes:
+  nfsgrafana:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=10.0.0.100,rw,nfsvers=4,async
+      device: ":/mnt/barracuda/nfsgrafana"
+  nfsprometheus:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=10.0.0.100,rw,nfsvers=4,async
+      device: ":/mnt/barracuda/nfsprometheus"
 
 services:
   grafana:
@@ -22,7 +22,7 @@ services:
     ports:
     - 3000:3000
     volumes:
-    - /mnt/nfsgrafana:/var/lib/grafana
+    - nfsgrafana:/var/lib/grafana
     depends_on:
     - prometheus
 
@@ -34,7 +34,7 @@ services:
     ports:
     - 3001:9090
     volumes:
-    - /mnt/nfsprometheus:/opt/prometheus/data
+    - nfsprometheus:/opt/prometheus/data
     depends_on:
     - cadvisor
 
@@ -42,8 +42,8 @@ services:
     image: google/cadvisor:latest
     container_name: cadvisor
     restart: unless-stopped
-#    ports:
-#    - 3002:8080
+    ports:
+    - 3002:8080
     volumes:
     - /:/rootfs:ro
     - /var/run:/var/run:rw
