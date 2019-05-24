@@ -23,6 +23,11 @@ services:
     - 3000:3000
     volumes:
     - nfsgrafana:/var/lib/grafana
+    environment:
+    - "GF_SERVER_ROOT_URL=http://grafana.lab"
+    - "GF_cert_file=/var/lib/grafana/grafana.lab.crt"
+    - "GF_key_file=/var/lib/grafana/grafana.lab.key"
+    - "GF_protocol=https"
     depends_on:
     - prometheus
 
