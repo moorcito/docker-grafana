@@ -26,6 +26,14 @@ scrape_configs:
     static_configs:
             - targets: ['10.0.0.100']
 
+  - job_name: 'tina'
+    metrics_path: '/api/v1/allmetrics'
+    params:
+      format: [prometheus]
+    honor_labels: true
+    static_configs:
+      - targets: ['10.0.0.102:19999']
+
   - job_name: 'lia'
     metrics_path: '/api/v1/allmetrics'
     params:
@@ -34,13 +42,21 @@ scrape_configs:
     static_configs:
       - targets: ['10.0.0.103:19999']
 
-  - job_name: 'tina'
+  - job_name: 'xps'
     metrics_path: '/api/v1/allmetrics'
     params:
       format: [prometheus]
     honor_labels: true
     static_configs:
-      - targets: ['10.0.0.102:19999']
+      - targets: ['10.0.0.104:19999']
+
+  - job_name: 'thinkpad'
+    metrics_path: '/api/v1/allmetrics'
+    params:
+      format: [prometheus]
+    honor_labels: true
+    static_configs:
+      - targets: ['10.0.0.105:19999']
 
   - job_name: 'semperpi'
     metrics_path: '/api/v1/allmetrics'
@@ -113,12 +129,4 @@ scrape_configs:
     honor_labels: true
     static_configs:
       - targets: ['10.0.0.69:19999']
-
-  - job_name: 'thinkpad'
-    metrics_path: '/api/v1/allmetrics'
-    params:
-      format: [prometheus]
-    honor_labels: true
-    static_configs:
-      - targets: ['10.0.0.105:19999']
 
