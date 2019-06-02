@@ -2,7 +2,12 @@ FROM alpine:latest
 
 MAINTAINER Jaime Navarro
 
-RUN wget -O /tmp/prometheus.tar.gz https://github.com/prometheus/prometheus/releases/download/v2.9.2/prometheus-2.9.2.linux-amd64.tar.gz
+RUN apk add --no-cache tzdata
+
+ENV TZ=Europe/Madrid
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+RUN wget -O /tmp/prometheus.tar.gz https://github.com/prometheus/prometheus/releases/download/v2.10.0/prometheus-2.10.0.linux-amd64.tar.gz
 RUN addgroup -S prometheus && adduser -S -G prometheus prometheus
 RUN mkdir -p /opt/prometheus
 RUN chown prometheus:prometheus /opt/prometheus
